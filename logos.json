@@ -1,0 +1,19 @@
+{
+ "binance":"binance.com","cablenet":"cablenet.com.cy","cloudflare":"cloudflare.com","coinbase":"coinbase.com",
+ "darktrace":"darktrace.com","dropbox":"dropbox.com","facebook":"facebook.com","firefox":"mozilla.org",
+ "gatehub":"gatehub.net","gatehun":"gatehub.net","google":"google.com","gmail":"gmail.com","kraken":"kraken.com",
+ "homeassistant":"home-assistant.io","hass":"home-assistant.io","ha":"home-assistant.io",
+ "microsoft":"microsoft.com","minergate":"minergate.com","namecheap":"namecheap.com","paypal":"paypal.com",
+ "reddit":"reddit.com","bibox":"bibox.com","freewallet":"freewallet.org","whitebit":"whitebit.com",
+ "instagram":"instagram.com","bitrue":"bitrue.com","hotbit":"hotbit.io","godaddy":"godaddy.com","bitstamp":"bitstamp.net",
+ "nexo":"nexo.com","myheritage":"myheritage.com","traderwagon":"traderwagon.com","steam":"steampowered.com",
+ "kucoin":"kucoin.com","brise":"bitgert.com","bitgert":"bitgert.com","bitget":"bitget.com","bybit":"bybit.com",
+ "nord":"nordaccount.com","nordvpn":"nordvpn.com","contabo":"contabo.com","guacamole":"guacamole.apache.org",
+ "firefly":"firefly-iii.org","wise":"wise.com","youtbpremium":"youtube.com","youtube":"youtube.com","termius":"termius.com",
+ "opensea":"opensea.io","monday":"monday.com","yahoo":"yahoo.com","synology":"synology.com","gemini":"gemini.com",
+ "ibkr":"interactivebrokers.com","chatgpt":"openai.com","openai":"openai.com","whm":"cpanel.net","cpanel":"cpanel.net",
+ "github":"github.com","gitlab":"gitlab.com","amazon":"amazon.com","aws":"aws.amazon.com","apple":"apple.com",
+ "twitter":"x.com","x":"x.com","linkedin":"linkedin.com","discord":"discord.com","slack":"slack.com","telegram":"telegram.org",
+ "okx":"okx.com","kraken-sign-in":"kraken.com","kraken-funding":"kraken.com","kraken-master":"kraken.com",
+ "revolut":"revolut.com","proton":"proton.me","bitwarden":"bitwarden.com","digitalocean":"digitalocean.com","hetzner":"hetzner.com"
+}
