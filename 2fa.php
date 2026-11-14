@@ -68,6 +68,17 @@ main{padding:14px 24px 30px}
 @media(max-width:1000px){#entries-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:780px){#entries-list{grid-template-columns:repeat(2,minmax(0,1fr))}.hbar,.panels,main{padding-left:12px;padding-right:12px}.searchbox{max-width:none;margin-left:0}}
 @media(max-width:420px){#entries-list{grid-template-columns:1fr}}
+.ed{right:26px}
+.tile:hover .ed{opacity:1}.ed:hover{background:#e0e7ff!important;color:var(--accent)!important}
+.head{padding-right:40px}
+.tile{cursor:grab}.tile.dragging{opacity:.4}.tile.over{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+#edit-modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:50;align-items:center;justify-content:center}
+#edit-modal.on{display:flex}
+.mbox{background:#fff;border-radius:12px;padding:20px;width:min(420px,92vw);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.mbox h3{margin:0 0 14px;font-size:1rem}
+.mbox label{display:block;font-size:.8rem;color:var(--muted);margin-bottom:10px}
+.mbox input{display:block;width:100%;margin-top:4px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;font-size:.9rem;color:var(--text)}
+.mact{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}
 </style>
 </head>
 <body>
@@ -100,6 +111,12 @@ main{padding:14px 24px 30px}
 <div id="totp-entries"><div id="entries-list"></div></div>
 <p class="muted" style="font-size:.78rem;margin-top:18px;text-align:center">Double-click a code to copy · All data stays in your browser — use Export to back up.</p>
 </main>
+<div id="edit-modal" onclick="if(event.target===this)closeEdit()"><div class="mbox">
+  <h3>Edit account</h3>
+  <label>Name<input id="ed_name" autocomplete="off"></label>
+  <label>Secret (Base32)<input id="ed_secret" autocomplete="off" spellcheck="false"></label>
+  <div class="mact"><button class="btn warn" onclick="closeEdit()">Cancel</button><button class="btn" onclick="saveEdit()">Save</button></div>
+</div></div>
 
 <script>
 const timeStep=30, digits=6;
@@ -212,6 +229,13 @@ function renderEntryElements(){
     codeDiv.appendChild(currentDiv);codeDiv.appendChild(nextDiv);row.appendChild(codeDiv);
     const bar=document.createElement('div');bar.className='bar';const barI=document.createElement('i');bar.appendChild(barI);row.appendChild(bar);
     const del=document.createElement('button');del.className='del';del.title='Delete';del.textContent='✕';del.onclick=()=>deleteEntry(i);row.appendChild(del);
+    const ed=document.createElement('button');ed.className='del ed';ed.title='Edit';ed.textContent='✎';ed.onclick=()=>openEdit(i);row.appendChild(ed);
+    row.draggable=true;row.dataset.idx=i;
+    row.addEventListener('dragstart',ev=>{dragIdx=i;row.classList.add('dragging');ev.dataTransfer.effectAllowed='move';ev.dataTransfer.setData('text/plain',String(i));});
+    row.addEventListener('dragend',()=>{row.classList.remove('dragging');document.querySelectorAll('.tile.over').forEach(t=>t.classList.remove('over'));});
+    row.addEventListener('dragover',ev=>{if(dragIdx===null||dragIdx===i)return;ev.preventDefault();row.classList.add('over');});
+    row.addEventListener('dragleave',()=>row.classList.remove('over'));
+    row.addEventListener('drop',ev=>{ev.preventDefault();row.classList.remove('over');if(dragIdx===null||dragIdx===i)return;const en=loadEntries();const [m]=en.splice(dragIdx,1);en.splice(i,0,m);saveEntries(en);dragIdx=null;renderEntryElements();renderTabs();updateCodes();});
     row.appendChild(flash);
     list.appendChild(row);
     entryElements.push({currentDiv,nextDiv,timeDiv,barI,secret:entry.secret});
@@ -234,6 +258,13 @@ async function updateCodes(){
     e.timeDiv.textContent=secondsLeft+'s';e.barI.style.width=(secondsLeft/timeStep*100)+'%';e.barI.style.background=col;
   }
 }
+
+// --- Edit + drag state ---
+let dragIdx=null,editIdx=null;
+function openEdit(i){const e=loadEntries()[i];if(!e)return;editIdx=i;document.getElementById('ed_name').value=e.name;document.getElementById('ed_secret').value=e.secret;document.getElementById('edit-modal').classList.add('on');document.getElementById('ed_name').focus();}
+function closeEdit(){document.getElementById('edit-modal').classList.remove('on');editIdx=null;}
+function saveEdit(){if(editIdx===null)return;const name=document.getElementById('ed_name').value.trim();const secret=document.getElementById('ed_secret').value.trim().replace(/\s+/g,'');if(!name||!secret)return alert('Name and Secret required');const en=loadEntries();en[editIdx]={...en[editIdx],name,secret};saveEntries(en);closeEdit();renderEntryElements();renderTabs();updateCodes();}
+document.addEventListener('keydown',ev=>{const m=document.getElementById('edit-modal');if(!m.classList.contains('on'))return;if(ev.key==='Escape')closeEdit();if(ev.key==='Enter')saveEdit();});
 
 // --- Saved search tabs ---
 function loadTabs(){const m=document.cookie.match(/(?:^|; )totp_tabs=([^;]*)/);if(!m)return [];try{return JSON.parse(decodeURIComponent(m[1]));}catch(e){return [];}}

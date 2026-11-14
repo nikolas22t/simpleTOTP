@@ -10,7 +10,8 @@ A lightweight, self-hosted **TOTP (time-based one-time password) manager** that 
 - Double-click a code to copy it (copied without spaces)
 - Search, with **saved search tabs** (e.g. a permanent "work" or "gmail" tab), stored in a cookie
 - **Service logos**: names like `Binance`, `Gmail` or `GitHub` automatically show the service logo, looked up from a server-side logo list
-- Add, delete, sort A→Z, clear all
+- Add, **edit** (✎ on hover), delete, sort A→Z, clear all
+- **Drag and drop** cards to reorder them
 - Export / import all accounts as JSON
 
 ## Files
