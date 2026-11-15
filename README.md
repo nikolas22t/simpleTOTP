@@ -12,7 +12,7 @@ A lightweight, self-hosted **TOTP (time-based one-time password) manager** that 
 - **Service logos**: names like `Binance`, `Gmail` or `GitHub` automatically show the service logo, looked up from a server-side logo list
 - Add, **edit** (✎ on hover), delete, sort A→Z, clear all
 - **Drag and drop** cards to reorder them
-- Export / import all accounts as JSON
+- Export / import as JSON — all accounts in your current order, or just the current view (search / tab)
 
 ## Files
 

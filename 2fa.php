@@ -98,7 +98,8 @@ main{padding:14px 24px 30px}
     <button onclick="clearAll()" class="btn warn" style="margin-left:auto">Clear all</button>
   </div>
   <div class="panel" id="import-section"><span class="lbl">Backup</span>
-    <button class="btn" onclick="exportEntries()">Export JSON</button>
+    <button class="btn" onclick="exportEntries()" title="All accounts, in your current (drag-and-drop) order">Export all JSON</button>
+    <button class="btn" onclick="exportView()" title="Only the accounts currently shown (search / tab), in the order shown">Export current view</button>
     <input type="file" id="import_file" accept="application/json">
     <button class="btn" onclick="importEntries()">Import JSON</button>
   </div>
@@ -157,6 +158,8 @@ function sortEntries(){const entries=loadEntries();entries.sort((a,b)=>a.name.lo
 // --- Export / Import ---
 function exportEntries(){const entries=loadEntries();const blob=new Blob([JSON.stringify(entries,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='totp_entries.json';a.click();}
 function importEntries(){const fileInput=document.getElementById('import_file');if(fileInput.files.length===0)return alert('Select a file');const reader=new FileReader();reader.onload=()=>{try{const entries=JSON.parse(reader.result);saveEntries(entries);renderEntryElements();}catch(e){alert('Invalid JSON file');}};reader.readAsText(fileInput.files[0]);}
+
+function exportView(){const f=document.getElementById('search-totp').value.toLowerCase();const entries=loadEntries().filter(e=>e.name.toLowerCase().includes(f));if(!entries.length)return alert('No accounts in the current view');const tag=f.trim()?'_'+f.trim().replace(/[^a-z0-9]+/g,'-'):'';const blob=new Blob([JSON.stringify(entries,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='totp_entries'+tag+'.json';a.click();}
 
 // --- Base32 Decode ---
 function base32Decode(s){const alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';let bits='';s=s.replace(/=+$/,'').toUpperCase();for(let c of s){const val=alphabet.indexOf(c);if(val===-1)continue;bits+=val.toString(2).padStart(5,'0');}let bytes=[];for(let i=0;i+8<=bits.length;i+=8)bytes.push(parseInt(bits.substring(i,i+8),2));return new Uint8Array(bytes);}
