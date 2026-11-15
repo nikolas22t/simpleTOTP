@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <link rel="icon" type="image/x-icon" href="faviconkey.ico">
-<title>Persistent Browser TOTP Manager</title>
+<title>SimpleTotp</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 :root{--bg:#f4f6f9;--card:#fff;--line:#e3e7ed;--text:#1c2430;--muted:#6b7686;--accent:#2563eb;--danger:#dc2626}
@@ -83,7 +83,7 @@ main{padding:14px 24px 30px}
 </head>
 <body>
 <header><div class="hbar">
-  <div class="brand"><div class="logo">🔐</div><div>TOTP Manager<small>Stored locally in this browser</small></div></div>
+  <div class="brand"><div class="logo">🔐</div><div>SimpleTotp<small>Stored locally in this browser</small></div></div>
   <div class="searchbox"><input type="text" id="search-totp" placeholder="Search accounts…" autocomplete="off"><button class="hbtn primary" onclick="saveTab()" title="Save this search as a permanent tab">+ Tab</button></div>
   <button class="hbtn" onclick="toggleSection('add-section')">＋ Add</button>
   <button class="hbtn" onclick="toggleSection('import-section')">⇅ Import / Export</button>

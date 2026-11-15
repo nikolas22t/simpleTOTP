@@ -1,4 +1,4 @@
-# Simple TOTP Manager
+# SimpleTotp
 
 A lightweight, self-hosted **TOTP (time-based one-time password) manager** that runs entirely in your browser. Secrets are kept in the browser's `localStorage` and never sent to the server.
 
